@@ -18,6 +18,7 @@ class WallFollow(Node):
         # call the class constructor
         super().__init__('wall_follow')
         cb_group = ReentrantCallbackGroup()
+        self.get_logger().info('test')
         # create the publisher object
         self.publisher_ = self.create_publisher(Twist, 'cmd_vel', 10)
         # create the subscriber object
@@ -35,7 +36,8 @@ class WallFollow(Node):
         self.finish = False
         # create a Twist message
         self.cmd = Twist()
-        #self.timer = self.create_timer(self.timer_period, self.motion)
+        self.timer = self.create_timer(self.timer_period, self.motion)
+        self.get_logger().info('init')
 
     def read_laser(self, msg):
         ml = 0
@@ -52,6 +54,7 @@ class WallFollow(Node):
         #self.get_logger().info('Right: "%s", Front: "%s", Nearest: "%s"' %
             #(str(self.laser_right), str(self.laser_front), str(self.min_laser)))
         # Logic of move
+        self.get_logger().info('timer')
 
             # if self.laser_right > 0.27:
             #    self.cmd.linear.x = 0.05
