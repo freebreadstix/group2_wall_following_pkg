@@ -40,19 +40,47 @@ class WallFollow(Node):
     def read_laser(self, msg):
         ml = 0
         for i, val in enumerate(msg.ranges):
-            if msg.ranges[ml] < 5:
+            if msg.ranges[ml] < .10:
                 ml = i
-            elif val < msg.ranges[ml] and val > 5:
+            elif val < msg.ranges[ml] and val > 0.1:
                 ml = i
         self.min_laser = (ml, msg.ranges[ml])
+        self.laser_right = msg.ranges[135]
 
-        self.get_logger().info(str(msg.ranges))
+        self.get_logger().info('Nearest: "%s"' %
+            (str(self.min_laser)))
 
     def motion(self):
         # print the data
         #self.get_logger().info('Right: "%s", Front: "%s", Nearest: "%s"' %
             #(str(self.laser_right), str(self.laser_front), str(self.min_laser)))
         # Logic of move
+        fwd_spd = 0.01
+        ang_spd = 0.01
+
+        self.cmd.linear.x = fwd_spd
+        if self.min_laser[0] < 405:
+            self.get_logger().info(str(self.min_laser))
+
+
+        # if self.laser_right > 1:
+        #     self.cmd.linear.x = 0.0
+        #     self.cmd.angular.z = 0.0
+        #     self.destroy_timer(self.timer)
+        # elif self.min_laser[0] < 135:
+        #     if self.min_laser[1] < .3:
+        #         self.cmd.angular.z = 0.0
+        #         self.cmd.linear.x = fwd_spd
+        #     elif self.min_laser[1] > .3:
+        #         self.cmd.angular.z = ang_spd
+        #         self.cmd.linear.x = fwd_spd
+        # elif self.min_laser[0] > 135 and self.min_laser[0] < 405:
+        #     if self.min_laser[1] < .3:
+        #         self.cmd.angular.z = -ang_spd
+        #         self.cmd.linear.x = fwd_spd
+        #     elif self.min_laser[1] > .3:
+        #         self.cmd.angular.z = 0.0
+        #         self.cmd.linear.x = fwd_spd
 
             # if self.laser_right > 0.27:
             #    self.cmd.linear.x = 0.05
