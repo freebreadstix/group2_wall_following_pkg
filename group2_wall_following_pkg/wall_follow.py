@@ -46,7 +46,7 @@ class WallFollow(Node):
                 ml = i
         self.min_laser = (ml, msg.ranges[ml])
 
-        self.get_logger().info(str(enumerate(msg.ranges)))
+        self.get_logger().info(str(msg.ranges))
 
     def motion(self):
         # print the data
