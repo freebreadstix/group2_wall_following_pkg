@@ -47,8 +47,8 @@ class WallFollow(Node):
         self.min_laser = (ml, msg.ranges[ml])
         self.laser_right = msg.ranges[135]
 
-        self.get_logger().info('Nearest: "%s"' %
-            (str(self.min_laser)))
+        # self.get_logger().info('Nearest: "%s"' %
+        #     (str(self.min_laser)))
 
     def motion(self):
         # print the data
@@ -57,30 +57,29 @@ class WallFollow(Node):
         # Logic of move
         fwd_spd = 0.2
         ang_spd = 0.2
-
-        self.cmd.linear.x = fwd_spd
+        
         if self.min_laser[0] < 405:
             self.get_logger().info(str(self.min_laser))
 
 
-        # if self.laser_right > 1:
-        #     self.cmd.linear.x = 0.0
-        #     self.cmd.angular.z = 0.0
-        #     self.destroy_timer(self.timer)
-        # elif self.min_laser[0] < 135:
-        #     if self.min_laser[1] < .3:
-        #         self.cmd.angular.z = 0.0
-        #         self.cmd.linear.x = fwd_spd
-        #     elif self.min_laser[1] > .3:
-        #         self.cmd.angular.z = ang_spd
-        #         self.cmd.linear.x = fwd_spd
-        # elif self.min_laser[0] > 135 and self.min_laser[0] < 405:
-        #     if self.min_laser[1] < .3:
-        #         self.cmd.angular.z = -ang_spd
-        #         self.cmd.linear.x = fwd_spd
-        #     elif self.min_laser[1] > .3:
-        #         self.cmd.angular.z = 0.0
-        #         self.cmd.linear.x = fwd_spd
+        if self.laser_right > 1:
+            self.cmd.linear.x = 0.0
+            self.cmd.angular.z = 0.0
+            self.destroy_timer(self.timer)
+        elif self.min_laser[0] < 135:
+            if self.min_laser[1] < .3:
+                self.cmd.angular.z = 0.0
+                self.cmd.linear.x = fwd_spd
+            elif self.min_laser[1] > .3:
+                self.cmd.angular.z = ang_spd
+                self.cmd.linear.x = fwd_spd
+        elif self.min_laser[0] > 135 and self.min_laser[0] < 405:
+            if self.min_laser[1] < .3:
+                self.cmd.angular.z = -ang_spd
+                self.cmd.linear.x = fwd_spd
+            elif self.min_laser[1] > .3:
+                self.cmd.angular.z = 0.0
+                self.cmd.linear.x = fwd_spd
 
             # if self.laser_right > 0.27:
             #    self.cmd.linear.x = 0.05
