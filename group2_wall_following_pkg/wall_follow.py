@@ -56,7 +56,7 @@ class WallFollow(Node):
             #(str(self.laser_right), str(self.laser_front), str(self.min_laser)))
         # Logic of move
         fwd_spd = 0.2
-        ang_spd = 0.2
+        ang_spd = 0.8
         
         if self.min_laser[0] < 405:
             self.get_logger().info(str(self.min_laser))
