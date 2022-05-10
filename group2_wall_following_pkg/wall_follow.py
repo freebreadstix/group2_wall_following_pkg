@@ -62,11 +62,11 @@ class WallFollow(Node):
             self.get_logger().info(str(self.min_laser))
 
 
-        if self.laser_right > 1:
-            self.cmd.linear.x = 0.0
-            self.cmd.angular.z = 0.0
-            self.destroy_timer(self.timer)
-        elif self.min_laser[0] < 135:
+        # if self.laser_right > 1:
+        #     self.cmd.linear.x = 0.0
+        #     self.cmd.angular.z = 0.0
+        #     self.destroy_timer(self.timer)
+        if self.min_laser[0] < 135:
             if self.min_laser[1] < .3:
                 self.cmd.angular.z = 0.0
                 self.cmd.linear.x = fwd_spd
