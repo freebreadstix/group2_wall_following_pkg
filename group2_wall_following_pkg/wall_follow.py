@@ -40,7 +40,7 @@ class WallFollow(Node):
     def read_laser(self, msg):
         ml = 0
         for i, val in enumerate(msg.ranges):
-            if val > msg.ranges[ml]:
+            if val < msg.ranges[ml] and val > 5:
                 ml = i
         self.min_laser = (ml, msg.ranges[ml])
 
